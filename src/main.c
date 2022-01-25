@@ -19,6 +19,8 @@ void read_file (char *file_name, matrix *m, wordList *wl) {
 
     if (fp == NULL) {
         printf("Fail to read the file!\n");
+        row(*m) = 0;
+        col(*m) = 0;
     }
     else {
         ch = fgetc(fp);
@@ -329,86 +331,89 @@ int main () {
     scanf("%s", &filename);
     read_file(filename, &m, &l);
 
-    copy_matrix(m, &m_ans); // membuat matriks jawaban
+    if (row(m) != 0 || col(m) != 0) {
 
-    printf("matrix size is : %dx%d\n\n", row(m), col(m));
+        copy_matrix(m, &m_ans); // membuat matriks jawaban
 
-    while (l != NULL) {
-        // begin the brute force for each word in the list
-        found = false;
-        i = 0;
-        j = 0;
+        printf("matrix size is : %dx%d\n\n", row(m), col(m));
 
-        // begin time count
-        clock_gettime(CLOCK_MONOTONIC, &begin);
+        while (l != NULL) {
+            // begin the brute force for each word in the list
+            found = false;
+            i = 0;
+            j = 0;
 
-        while (!found && i < row(m)) {
-            if (j == col(m)) {
-                // ke baris berikutnya
-                i++;
-                j = 0;
+            // begin time count
+            clock_gettime(CLOCK_MONOTONIC, &begin);
+
+            while (!found && i < row(m)) {
+                if (j == col(m)) {
+                    // ke baris berikutnya
+                    i++;
+                    j = 0;
+                }
+                else if (check_N(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'N');
+                    found = true;
+                }
+                else if (check_S(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'S');
+                    found = true;
+                }
+                else if (check_E(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'E');
+                    found = true;
+                }
+                else if (check_W(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'W');
+                    found = true;
+                }
+                else if (check_NE(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'U');
+                    found = true;
+                }
+                else if (check_SE(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'M');
+                    found = true;
+                }
+                else if (check_SW(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'B');
+                    found = true;
+                }
+                else if (check_NW(first(l), 0, m, i, j)) {
+                    ans_matrix(first(l), i, j, &m_ans, 'T');
+                    found = true;
+                }
+                else {
+                    // ke kolom berikutnya
+                    j++;
+                }
             }
-            else if (check_N(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'N');
-                found = true;
-            }
-            else if (check_S(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'S');
-                found = true;
-            }
-            else if (check_E(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'E');
-                found = true;
-            }
-            else if (check_W(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'W');
-                found = true;
-            }
-            else if (check_NE(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'U');
-                found = true;
-            }
-            else if (check_SE(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'M');
-                found = true;
-            }
-            else if (check_SW(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'B');
-                found = true;
-            }
-            else if (check_NW(first(l), 0, m, i, j)) {
-                ans_matrix(first(l), i, j, &m_ans, 'T');
-                found = true;
+            if (found) {
+                // stop time count
+                clock_gettime(CLOCK_MONOTONIC, &end);
+                searchtime = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec  - begin.tv_sec);
+        
+                printf("word ");
+                for (g = 0; g < length(first(l)); g++) {
+                    printf("%c", word(first(l))[g]);
+                }
+                printf(" found in %f seconds\n", searchtime);
+                dequeue(&l, &l_found);
             }
             else {
-                // ke kolom berikutnya
-                j++;
+                dequeue(&l, &l_notfound);
             }
         }
-        if (found) {
-            // stop time count
-            clock_gettime(CLOCK_MONOTONIC, &end);
-            searchtime = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec  - begin.tv_sec);
-        
-            printf("word ");
-            for (g = 0; g < length(first(l)); g++) {
-                printf("%c", word(first(l))[g]);
-            }
-            printf(" found in %f seconds\n", searchtime);
-            dequeue(&l, &l_found);
+        printf("\n");
+        print_matrix(m_ans);
+        printf("\n");
+        if (l_notfound != NULL) {
+            printf("These are the words which cannot be found :\n");
+            print_wordList(l_notfound);
         }
-        else {
-            dequeue(&l, &l_notfound);
-        }
+        printf("\n");
+        printf("Fin\n");
     }
-    printf("\n");
-    print_matrix(m_ans);
-    printf("\n");
-    if (l_notfound != NULL) {
-        printf("These are the words which cannot be found :\n");
-        print_wordList(l_notfound);
-    }
-    printf("\n");
-    printf("Fin\n");
     return 0;
 }
