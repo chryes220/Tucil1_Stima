@@ -4,7 +4,7 @@
 Program ini merupakan program yang dapat menyelesaikan permainan Word Search Puzzle secara brute force. Program ditulis dengan menggunakan bahasa pemrograman C dan telah di-compile menggunakan compiler gcc.
 
 ## Requirements
-Program hanya menerima masukan berupa file dengan format .txt yang terdiri dari puzzle dan diikuti dengan sebuah baris kosong serta daftar kata-kata yang harus dicari, masing-masing dipisahkan oleh baris baru.
+Program hanya menerima masukan berupa file dengan format .txt yang terdiri dari puzzle dan diikuti dengan sebuah baris kosong serta daftar kata-kata yang harus dicari, masing-masing dipisahkan oleh sebuah baris baru.
 
 Berikut adalah contoh isi file yang valid.
 
@@ -33,6 +33,13 @@ Pastikan terlebih dahulu bahwa Anda berada dalam folder utama, lalu ketikkan ins
 ```
 ./bin/main
 ```
+Program akan meminta input nama file. File puzzle yang akan diselesaikan harus berada pada subfolder `test`. Ketikkan nama file diikuti dengan '.txt'. Sebagai contoh :
+
+```
+Enter file name : large3.txt
+```
+
+Ketik enter, maka program akan menyelesaikan puzzle pada file.
 
 ---
 
