@@ -19,7 +19,7 @@ typedef Address wordList;
 
 Address newNode (char w[20]);
 void enqueue (wordList *wl, char w[20]);
-void dequeue (wordList *wl);
+void dequeue (wordList *wl, wordList *wOut);
 void print_wordList (wordList w);
 
 #endif

@@ -32,7 +32,7 @@ void enqueue (wordList *wl, char w[20]) {
     }
 }
 
-void dequeue (wordList *wl) {
+void dequeue (wordList *wl, wordList *wOut) {
     Address p;
     p = first(*wl);
     if (next(p) == NULL) {
@@ -41,6 +41,7 @@ void dequeue (wordList *wl) {
     else {
         first(*wl) = next(p);
     }
+    enqueue(wOut, word(p));
     free(p);
 }
 

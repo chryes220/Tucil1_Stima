@@ -317,9 +317,9 @@ void ans_matrix (wordList w, int i, int j, matrix *m_ans, char dir) {
 
 int main () {
     matrix m, m_ans;
-    wordList l;
+    wordList l, l_notfound, l_found;
     char filename[20];
-    int i, j, k, g;
+    int i, j, k, g, o;
     boolean found;
     struct timespec begin, end;
     float searchtime;
@@ -332,6 +332,7 @@ int main () {
     copy_matrix(m, &m_ans); // membuat matriks jawaban
 
     printf("matrix size is : %dx%d\n\n", row(m), col(m));
+
     while (l != NULL) {
         // begin the brute force for each word in the list
         found = false;
@@ -341,8 +342,7 @@ int main () {
         // begin time count
         clock_gettime(CLOCK_MONOTONIC, &begin);
 
-        while (!found) {
-            // dipastikan ketemu
+        while (!found && i < row(m)) {
             if (j == col(m)) {
                 // ke baris berikutnya
                 i++;
@@ -385,19 +385,29 @@ int main () {
                 j++;
             }
         }
-        // stop time count
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        searchtime = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec  - begin.tv_sec);
+        if (found) {
+            // stop time count
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            searchtime = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec  - begin.tv_sec);
         
-        printf("word ");
-        for (g = 0; g < length(first(l)); g++) {
-            printf("%c", word(first(l))[g]);
+            printf("word ");
+            for (g = 0; g < length(first(l)); g++) {
+                printf("%c", word(first(l))[g]);
+            }
+            printf(" found in %f seconds\n", searchtime);
+            dequeue(&l, &l_found);
         }
-        printf(" found in %f seconds\n", searchtime);
-        dequeue(&l);
+        else {
+            dequeue(&l, &l_notfound);
+        }
     }
     printf("\n");
     print_matrix(m_ans);
+    printf("\n");
+    if (l_notfound != NULL) {
+        printf("These are the words which cannot be found :\n");
+        print_wordList(l_notfound);
+    }
     printf("\n");
     printf("Fin\n");
     return 0;
