@@ -353,34 +353,42 @@ int main () {
                     j = 0;
                 }
                 else if (check_N(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'N');
                     found = true;
                 }
                 else if (check_S(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'S');
                     found = true;
                 }
                 else if (check_E(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'E');
                     found = true;
                 }
                 else if (check_W(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'W');
                     found = true;
                 }
                 else if (check_NE(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'U');
                     found = true;
                 }
                 else if (check_SE(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'M');
                     found = true;
                 }
                 else if (check_SW(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'B');
                     found = true;
                 }
                 else if (check_NW(first(l), 0, m, i, j)) {
+                    clock_gettime(CLOCK_MONOTONIC, &end); // stop time count
                     ans_matrix(first(l), i, j, &m_ans, 'T');
                     found = true;
                 }
@@ -390,8 +398,6 @@ int main () {
                 }
             }
             if (found) {
-                // stop time count
-                clock_gettime(CLOCK_MONOTONIC, &end);
                 searchtime = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec  - begin.tv_sec);
         
                 printf("word ");

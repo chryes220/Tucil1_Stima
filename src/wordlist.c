@@ -5,7 +5,7 @@ Address newNode (char w[20]) {
     Address p = (Address) malloc(sizeof(Node));
     if (p != NULL) {
         n = 0;
-        while (n < 20 && w[n] != '\0') {
+        while (n < 20 && (int) w[n] >= 65 && (int) w[n] <= 90) {
             word(p)[n] = w[n];
             n++;
         }
