@@ -4,7 +4,7 @@
 Program ini merupakan program yang dapat menyelesaikan permainan Word Search Puzzle secara brute force. Program ditulis dengan menggunakan bahasa pemrograman C dan telah di-compile menggunakan compiler gcc.
 
 ## Requirements
-Program dapat dijalankan pada sistem operasi Windows. Program hanya menerima masukan berupa file dengan format .txt yang terdiri dari puzzle dan diikuti dengan sebuah baris kosong serta daftar kata-kata yang harus dicari, masing-masing dipisahkan oleh sebuah baris baru. Semua huruf dalam file merupakan huruf kapital.
+Program dapat dijalankan pada sistem operasi Windows melalui CLI PowerShell. Program hanya menerima masukan berupa file dengan format .txt yang terdiri dari puzzle dan diikuti dengan sebuah baris kosong serta daftar kata-kata yang harus dicari, masing-masing dipisahkan oleh sebuah baris baru. Semua huruf dalam file merupakan huruf kapital.
 
 Berikut adalah contoh isi file yang valid.
 
@@ -37,7 +37,7 @@ gcc src/main.c src/matrix.c src/wordlist.c -o bin/main
 
 Pastikan terlebih dahulu bahwa Anda berada dalam folder utama, lalu ketikkan instruksi di bawah ini pada command line untuk menjalankan executable file yang berada pada subfolder `bin`.
 ```
-./bin/main
+.\bin\main
 ```
 Program akan meminta input nama file. File puzzle yang akan diselesaikan harus berada pada subfolder `test`. Ketikkan nama file diikuti dengan '.txt'. Sebagai contoh :
 
